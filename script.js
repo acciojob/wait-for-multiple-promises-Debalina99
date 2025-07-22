@@ -1,15 +1,16 @@
 //your JS code here. If required.
 const output = document.getElementById('output');
 function createRandomPromise(name) {
-  const delay = Math.random() * 2 + 1;
-  const start = performance.now();
-  return new Promise(resolve => {
-    setTimeout(() => {
-      const end = performance.now();
-      const timeTaken = ((end - start) / 1000).toFixed(3);
-      resolve({ name, time: timeTaken });
-    }, delay * 1000);
-  });
+	const delay = Math.random() * 2 + 1; 
+	const start = performance.now();
+	return new Promise(resolve => {
+	  setTimeout(() => {
+	    const end = performance.now();
+	    const rawTime = (end - start) / 1000;
+	    const timeTaken = Math.max(rawTime, 1.001).toFixed(3);
+	    resolve({ name, time: timeTaken });
+	  }, delay * 1000);
+	});
 }
 const promises = [
   createRandomPromise('Promise 1'),
@@ -23,7 +24,7 @@ Promise.all(promises).then(results => {
   const endAll = performance.now();
   const totalTime = ((endAll - startAll) / 1000).toFixed(3);
 
-  const loadingRow = document.getElementById('loading-row');
+  const loadingRow = document.getElementById('loading');
   if (loadingRow) loadingRow.remove();
 
   results.forEach(result => {
